@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -103,26 +104,21 @@ class _HomepageState extends State<Homepage> {
                     width: 0.5,
                   ),
                 )),
-                child: Column(
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20),
-                    const Text(
+                    SizedBox(height: 20),
+                    Text(
                       'Hot Recommendations',
                       style: TextStyle(
                         color: AppColors.white,
                         fontSize: 18,
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    SizedBox(height: 5),
                     WidgetRecom(
                       itemConut: 5,
                       mainHeight: 220,
-                      image: Image.network(
-                          'https://picsum.photos/150/300?random',
-                          width: 300,
-                          height: 150,
-                          fit: BoxFit.cover),
                       title: "Sound of Sky",
                       subTitle: 'Robert Plant',
                     ),
@@ -162,8 +158,16 @@ class _HomepageState extends State<Homepage> {
                     WidgetRecom(
                       itemConut: 5,
                       mainHeight: 250,
-                      image: Image.network('https://picsum.photos/200/300',
-                          width: 170, height: 170, fit: BoxFit.cover),
+                      image: CachedNetworkImage(
+                        imageUrl: 'https://picsum.photos/300/150?random',
+                        width: 170,
+                        height: 172,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) =>
+                            const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                      ),
                       title: "Sound of Sky",
                       subTitle: 'Robert Plant',
                     ),

@@ -3,9 +3,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:music_app/src/features/home/components/drawer.dart';
+import 'package:music_app/src/features/songs/artists/artists.dart';
 import 'package:music_app/src/features/songs/data/playlist_data.dart';
 import 'package:music_app/src/features/songs/model/playlist_model.dart';
 import 'package:music_app/src/theme/color.dart';
+
+import 'widgets/album_button.dart';
+import 'widgets/album_list.dart';
 
 class SongsPage extends StatefulWidget {
   const SongsPage({super.key});
@@ -84,7 +88,8 @@ class _SongsPageState extends State<SongsPage> {
                   buildAllSongs(),
                   buildPlaylist(),
                   buildAlbums(),
-                  buildAllSongs(),
+                  // buildAllSongs(),
+                  const ArtistsPage(),
                   buildAllSongs(),
                 ],
               ),
@@ -344,116 +349,283 @@ class _SongsPageState extends State<SongsPage> {
         crossAxisSpacing: 20,
         mainAxisSpacing: 20,
       ),
-      itemCount: 6,
+      itemCount: 8,
       itemBuilder: (context, index) {
         // var index = index[];
         return SizedBox(
-          height: 300,
+          height: 350,
           child: Column(
             children: [
               Expanded(
                 child: GestureDetector(
-                  onTap: () {
-                    // Navigator.of(context).push(
-                    //   PageRouteBuilder(
-                    //     opaque: false,
-                    //     pageBuilder: (context, _, __) => const AlbumDetails(),
-                    //   ),
-                    // );
+                    onTap: () {
+                      // Navigator.of(context).push(
+                      //   PageRouteBuilder(
+                      //     opaque: false,
+                      //     pageBuilder: (context, _, __) => const AlbumDetails(),
+                      //   ),
+                      // );
 
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      isDismissible: false,
-                      useSafeArea: true,
-                      builder: (BuildContext context) {
-                        return DraggableScrollableSheet(
-                          initialChildSize: 1,
-                          maxChildSize: 1.0,
-                          minChildSize: 0.5,
-                          builder: (context, scrollController) {
-                            return Container(
-                              decoration: const BoxDecoration(
-                                color: AppColors.background,
-                              ),
-                              child: SingleChildScrollView(
-                                controller: scrollController,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: Row(
-                                        children: [
-                                          InkWell(
-                                            onTap: () =>
-                                                Navigator.of(context).pop(),
-                                            child: const Icon(
-                                              Icons.arrow_back_ios,
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        isDismissible: false,
+                        useSafeArea: true,
+                        builder: (BuildContext context) {
+                          return DraggableScrollableSheet(
+                            initialChildSize: 1,
+                            maxChildSize: 1.0,
+                            minChildSize: 0.5,
+                            builder: (context, scrollController) {
+                              return Container(
+                                decoration: const BoxDecoration(
+                                  color: AppColors.background,
+                                ),
+                                child: SingleChildScrollView(
+                                  controller: scrollController,
+                                  child: Column(
+                                    // mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Row(
+                                          children: [
+                                            InkWell(
+                                              onTap: () =>
+                                                  Navigator.of(context).pop(),
+                                              child: const Icon(
+                                                Icons.arrow_back_ios,
+                                                color: AppColors.white,
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            const Text(
+                                              'Album Details',
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: AppColors.white,
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            const Icon(
+                                              Icons.search,
                                               color: AppColors.white,
                                             ),
-                                          ),
-                                          const Spacer(),
-                                          const Text(
-                                            'Album Details',
-                                            style: TextStyle(
-                                              fontSize: 18,
-                                              color: AppColors.white,
-                                            ),
-                                          ),
-                                          const Spacer(),
-                                          const Icon(
-                                            Icons.search,
-                                            color: AppColors.white,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    ClipRRect(
-                                      child: BackdropFilter(
-                                        filter: ImageFilter.blur(
-                                            sigmaX: 10, sigmaY: 10),
-                                        child: Container(
-                                          height: 200,
-                                          // decoration: BoxDecoration(
-                                          //   image: DecorationImage(
-                                          //     image: NetworkImage(
-                                          //       'https://picsum.photos/150/150?random=$index',
-                                          //     ),
-                                          //     fit: BoxFit.fitHeight,
-                                          //   ),
-                                          // ),
+                                          ],
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 16),
-                                    const Text(
-                                      'Some additional details about the image can go here.',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
-                                    const SizedBox(height: 16),
-                                  ],
+                                      Center(
+                                        child: ClipRRect(
+                                          child: Stack(
+                                            children: [
+                                              Image.network(
+                                                'https://picsum.photos/150/150?random=$index',
+                                                height: 270,
+                                                width: double.maxFinite,
+                                                fit: BoxFit.cover,
+                                              ),
+                                              BackdropFilter(
+                                                filter: ImageFilter.blur(
+                                                  sigmaX: 10,
+                                                  sigmaY: 10,
+                                                ),
+                                                child: Container(
+                                                  height: 270,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    color: AppColors.background
+                                                        .withOpacity(0.5),
+                                                    // image: DecorationImage(
+                                                    //   image: NetworkImage(
+                                                    //     'https://picsum.photos/150/150?random=$index',
+                                                    //   ),
+                                                    //   fit: BoxFit.cover,
+                                                    // ),
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Row(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Container(
+                                                            height: 150,
+                                                            width: 150,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                15,
+                                                              ),
+                                                              image:
+                                                                  DecorationImage(
+                                                                image:
+                                                                    NetworkImage(
+                                                                  'https://picsum.photos/150/150?random=$index',
+                                                                ),
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 15),
+                                                          const Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceEvenly,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                "History",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color:
+                                                                      AppColors
+                                                                          .white,
+                                                                  fontSize: 30,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 10),
+                                                              Text(
+                                                                'by Michael Jackson',
+                                                                style:
+                                                                    TextStyle(
+                                                                  color:
+                                                                      AppColors
+                                                                          .white,
+                                                                  fontSize: 18,
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 10),
+                                                              Text(
+                                                                "1996 . 18 Songs . 64 min",
+                                                                style:
+                                                                    TextStyle(
+                                                                  color:
+                                                                      AppColors
+                                                                          .white,
+                                                                  fontSize: 18,
+                                                                ),
+                                                              )
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          AlbumDetailsButton(
+                                                            icon: const Icon(
+                                                              Icons
+                                                                  .play_arrow_outlined,
+                                                              color: AppColors
+                                                                  .white,
+                                                              size: 30,
+                                                            ),
+                                                            functionName:
+                                                                "Play",
+                                                            gradientColor:
+                                                                AppColors
+                                                                    .gradient2,
+                                                          ),
+                                                          const AlbumDetailsButton(
+                                                            icon: Icon(
+                                                              Icons.share,
+                                                              color: AppColors
+                                                                  .white,
+                                                              size: 20,
+                                                            ),
+                                                            functionName:
+                                                                "Share",
+                                                            color:
+                                                                AppColors.white,
+                                                          ),
+                                                          const AlbumDetailsButton(
+                                                            icon: Icon(
+                                                              Icons
+                                                                  .favorite_border_outlined,
+                                                              color: AppColors
+                                                                  .white,
+                                                              size: 20,
+                                                            ),
+                                                            functionName:
+                                                                "Add to favourites",
+                                                            color:
+                                                                AppColors.white,
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      const AlbumList(),
+                                      const SizedBox(height: 16),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    );
-                  },
-                  child: Container(
-                    height: 300,
-                    decoration: BoxDecoration(
-                      color: Colors.amberAccent,
-                      image: DecorationImage(
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
+                    child: Container(
+                      height: 300,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
                           image: NetworkImage(
-                            'https://picsum.photos/150/150?random=$index',
-                          ),
-                          fit: BoxFit.cover),
+                              'https://picsum.photos/150/150?randome$index'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+
+                    // CachedNetworkImage(
+                    //   imageUrl: 'https://picsum.photos/150/150?random=$index',
+                    //   imageBuilder: (context, imageProvider) => Container(
+                    //     height: 300,
+                    //     decoration: BoxDecoration(
+                    //       color: Colors.amberAccent,
+                    //       image: DecorationImage(
+                    //         image: imageProvider,
+                    //         fit: BoxFit.cover,
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   placeholder: (context, url) => const SizedBox(
+                    //     height: 70,
+                    //     width: 70,
+                    //     child: CircularProgressIndicator(),
+                    //   ),
+                    //   errorWidget: (context, url, error) =>
+                    //       const Icon(Icons.error),
+                    // ),
                     ),
-                  ),
-                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -478,7 +650,10 @@ class _SongsPageState extends State<SongsPage> {
                       GestureDetector(
                         onTapDown: (TapDownDetails details) {
                           _showCustomMenu(
-                              context, details.globalPosition, index);
+                            context,
+                            details.globalPosition,
+                            index,
+                          );
                         },
                         child: const Icon(
                           Icons.more_vert,
@@ -582,21 +757,5 @@ class _SongsPageState extends State<SongsPage> {
     if (selectedValue != null) {
       log('Selected: $selectedValue at index $index');
     }
-  }
-}
-
-class AlbumDetails extends StatelessWidget {
-  const AlbumDetails({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black.withOpacity(0.5), //
-      body: Container(
-        width: MediaQuery.of(context).size.width * 0.9,
-        height: 400,
-        child: const Text("Welcome"),
-      ),
-    );
   }
 }

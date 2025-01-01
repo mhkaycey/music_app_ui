@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -11,6 +13,13 @@ class AppColors {
   static const Color pink = Color(0xFFD9519D);
   static const Gradient gradient1 =
       LinearGradient(colors: [Color(0xFFC35BD1), Color(0XFF657DDF)]);
-  static const Gradient gradient2 =
-      LinearGradient(colors: [Color(0xFFED8770), Color(0XFFD9519D)]);
+  static Gradient gradient2 = const LinearGradient(
+    transform: GradientRotation(pi),
+    colors: [
+      Color(0xFFED8770),
+      Color(0XFFD9519D),
+    ],
+    begin: Alignment.centerRight,
+    end: Alignment.bottomRight,
+  );
 }
