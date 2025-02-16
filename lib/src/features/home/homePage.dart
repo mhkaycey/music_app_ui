@@ -80,7 +80,7 @@ class _HomepageState extends State<Homepage> {
                     color: AppColors.grey,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50),
+                    borderRadius: BorderRadius.circular(10),
                     borderSide: BorderSide.none,
                   ),
                 ),

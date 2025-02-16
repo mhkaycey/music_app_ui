@@ -18,7 +18,6 @@ class MainApp extends StatelessWidget {
         statusBarIconBrightness: Brightness.light,
         systemNavigationBarColor: Colors.transparent,
         systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarContrastEnforced: true,
       ),
     );
     return MaterialApp(

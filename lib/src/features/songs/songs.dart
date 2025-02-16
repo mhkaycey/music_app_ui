@@ -1,15 +1,12 @@
 import 'dart:developer';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:music_app/src/features/home/components/drawer.dart';
 import 'package:music_app/src/features/songs/artists/artists.dart';
 import 'package:music_app/src/features/songs/data/playlist_data.dart';
 import 'package:music_app/src/features/songs/model/playlist_model.dart';
+import 'package:music_app/src/features/songs/widgets/album_details.dart';
 import 'package:music_app/src/theme/color.dart';
-
-import 'widgets/album_button.dart';
-import 'widgets/album_list.dart';
 
 class SongsPage extends StatefulWidget {
   const SongsPage({super.key});
@@ -88,7 +85,6 @@ class _SongsPageState extends State<SongsPage> {
                   buildAllSongs(),
                   buildPlaylist(),
                   buildAlbums(),
-                  // buildAllSongs(),
                   const ArtistsPage(),
                   buildAllSongs(),
                 ],
@@ -351,7 +347,7 @@ class _SongsPageState extends State<SongsPage> {
       ),
       itemCount: 8,
       itemBuilder: (context, index) {
-        // var index = index[];
+        final imageUrl = 'https://picsum.photos/150/150?randome$index';
         return SizedBox(
           height: 350,
           child: Column(
@@ -366,240 +362,13 @@ class _SongsPageState extends State<SongsPage> {
                       //   ),
                       // );
 
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        isDismissible: false,
-                        useSafeArea: true,
-                        builder: (BuildContext context) {
-                          return DraggableScrollableSheet(
-                            initialChildSize: 1,
-                            maxChildSize: 1.0,
-                            minChildSize: 0.5,
-                            builder: (context, scrollController) {
-                              return Container(
-                                decoration: const BoxDecoration(
-                                  color: AppColors.background,
-                                ),
-                                child: SingleChildScrollView(
-                                  controller: scrollController,
-                                  child: Column(
-                                    // mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Row(
-                                          children: [
-                                            InkWell(
-                                              onTap: () =>
-                                                  Navigator.of(context).pop(),
-                                              child: const Icon(
-                                                Icons.arrow_back_ios,
-                                                color: AppColors.white,
-                                              ),
-                                            ),
-                                            const Spacer(),
-                                            const Text(
-                                              'Album Details',
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                color: AppColors.white,
-                                              ),
-                                            ),
-                                            const Spacer(),
-                                            const Icon(
-                                              Icons.search,
-                                              color: AppColors.white,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Center(
-                                        child: ClipRRect(
-                                          child: Stack(
-                                            children: [
-                                              Image.network(
-                                                'https://picsum.photos/150/150?random=$index',
-                                                height: 270,
-                                                width: double.maxFinite,
-                                                fit: BoxFit.cover,
-                                              ),
-                                              BackdropFilter(
-                                                filter: ImageFilter.blur(
-                                                  sigmaX: 10,
-                                                  sigmaY: 10,
-                                                ),
-                                                child: Container(
-                                                  height: 270,
-                                                  width: double.infinity,
-                                                  decoration: BoxDecoration(
-                                                    color: AppColors.background
-                                                        .withOpacity(0.5),
-                                                    // image: DecorationImage(
-                                                    //   image: NetworkImage(
-                                                    //     'https://picsum.photos/150/150?random=$index',
-                                                    //   ),
-                                                    //   fit: BoxFit.cover,
-                                                    // ),
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Container(
-                                                            height: 150,
-                                                            width: 150,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                15,
-                                                              ),
-                                                              image:
-                                                                  DecorationImage(
-                                                                image:
-                                                                    NetworkImage(
-                                                                  'https://picsum.photos/150/150?random=$index',
-                                                                ),
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                              width: 15),
-                                                          const Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceEvenly,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                "History",
-                                                                style:
-                                                                    TextStyle(
-                                                                  color:
-                                                                      AppColors
-                                                                          .white,
-                                                                  fontSize: 30,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                ),
-                                                              ),
-                                                              SizedBox(
-                                                                  height: 10),
-                                                              Text(
-                                                                'by Michael Jackson',
-                                                                style:
-                                                                    TextStyle(
-                                                                  color:
-                                                                      AppColors
-                                                                          .white,
-                                                                  fontSize: 18,
-                                                                ),
-                                                              ),
-                                                              SizedBox(
-                                                                  height: 10),
-                                                              Text(
-                                                                "1996 . 18 Songs . 64 min",
-                                                                style:
-                                                                    TextStyle(
-                                                                  color:
-                                                                      AppColors
-                                                                          .white,
-                                                                  fontSize: 18,
-                                                                ),
-                                                              )
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          AlbumDetailsButton(
-                                                            icon: const Icon(
-                                                              Icons
-                                                                  .play_arrow_outlined,
-                                                              color: AppColors
-                                                                  .white,
-                                                              size: 30,
-                                                            ),
-                                                            functionName:
-                                                                "Play",
-                                                            gradientColor:
-                                                                AppColors
-                                                                    .gradient2,
-                                                          ),
-                                                          const AlbumDetailsButton(
-                                                            icon: Icon(
-                                                              Icons.share,
-                                                              color: AppColors
-                                                                  .white,
-                                                              size: 20,
-                                                            ),
-                                                            functionName:
-                                                                "Share",
-                                                            color:
-                                                                AppColors.white,
-                                                          ),
-                                                          const AlbumDetailsButton(
-                                                            icon: Icon(
-                                                              Icons
-                                                                  .favorite_border_outlined,
-                                                              color: AppColors
-                                                                  .white,
-                                                              size: 20,
-                                                            ),
-                                                            functionName:
-                                                                "Add to favourites",
-                                                            color:
-                                                                AppColors.white,
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 16),
-                                      const AlbumList(),
-                                      const SizedBox(height: 16),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                      );
+                      _showAlbumDetails(context, index);
                     },
                     child: Container(
                       height: 300,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: NetworkImage(
-                              'https://picsum.photos/150/150?randome$index'),
+                          image: NetworkImage(imageUrl),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -671,6 +440,27 @@ class _SongsPageState extends State<SongsPage> {
               )
             ],
           ),
+        );
+      },
+    );
+  }
+
+  Future<dynamic> _showAlbumDetails(BuildContext context, int index) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      isDismissible: false,
+      useSafeArea: true,
+      builder: (BuildContext context) {
+        return DraggableScrollableSheet(
+          initialChildSize: 1,
+          maxChildSize: 1.0,
+          minChildSize: 0.5,
+          builder: (context, scrollController) {
+            return AlbumDetailsSheet(
+                index: index, scrollController: scrollController);
+          },
         );
       },
     );
